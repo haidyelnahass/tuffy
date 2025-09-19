@@ -1,7 +1,7 @@
-package com.eg.ride.filter;
+package com.eg.tracking.filter;
 
-import com.eg.ride.model.enums.CustomerStatusEnum;
-import com.eg.ride.util.JwtUtil;
+import com.eg.tracking.model.enums.CustomerStatusEnum;
+import com.eg.tracking.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
@@ -20,8 +20,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.List;
 
-import static com.eg.ride.model.enums.UserTypeEnum.DRIVER;
-import static com.eg.ride.model.enums.UserTypeEnum.RIDER;
+import static com.eg.tracking.model.enums.UserTypeEnum.DRIVER;
+import static com.eg.tracking.model.enums.UserTypeEnum.RIDER;
 
 @Component
 @RequiredArgsConstructor
@@ -89,3 +89,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     filterChain.doFilter(request, response);
   }
 }
+

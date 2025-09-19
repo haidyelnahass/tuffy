@@ -1,4 +1,4 @@
-package com.eg.ride.util;
+package com.eg.tracking.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -14,7 +14,6 @@ public class JwtUtil {
 
   @Value("${security.jwt.secret}")
   private String secretKey;
-
 
   public boolean validateToken(String token) {
     return !isTokenExpired(token);
@@ -42,4 +41,5 @@ public class JwtUtil {
     // ensure it's at least 256-bit for HS256
     return Keys.hmacShaKeyFor(jwtSecret.getBytes());
   }
+
 }
