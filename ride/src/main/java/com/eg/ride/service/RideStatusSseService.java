@@ -1,13 +1,12 @@
 package com.eg.ride.service;
 
-import com.eg.ride.entity.RideEntity;
+import com.eg.ride.model.entity.RideEntity;
 import com.eg.ride.model.enums.RideStatusEnum;
 import com.eg.ride.repository.RideRepository;
 import com.eg.ride.repository.RideStatusRepository;
 import com.eg.ride.util.RedisCacheManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.antlr.v4.runtime.misc.Interval;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

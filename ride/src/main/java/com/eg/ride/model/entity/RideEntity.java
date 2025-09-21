@@ -1,4 +1,4 @@
-package com.eg.ride.entity;
+package com.eg.ride.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,6 +46,10 @@ public class RideEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "STATUS", referencedColumnName = "ID")
   private RideStatusEntity status;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "TYPE", referencedColumnName = "ID")
+  private RideTypeEntity type;
 
   @Column(name = "PRICE")
   private Double price;

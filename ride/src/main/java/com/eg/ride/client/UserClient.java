@@ -2,6 +2,7 @@ package com.eg.ride.client;
 
 import com.eg.ride.client.model.response.ProfileDetailsResponse;
 import com.eg.ride.exception.BadRequestException;
+import com.eg.ride.exception.model.ErrorCode;
 import com.eg.ride.exception.model.ErrorMessage;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,7 @@ public class UserClient {
           HttpStatusCode::is4xxClientError,
           response -> response.bodyToMono(ErrorMessage.class) // <-- your error class
               .flatMap(errorBody ->
-                Mono.error(new BadRequestException(errorBody.getMessage().toString())))
+                Mono.error(new BadRequestException(errorBody.getMessage().toString(), ErrorCode.UNKNOWN_EXCEPTION)))
         )
         .onStatus(
           HttpStatusCode::is5xxServerError,

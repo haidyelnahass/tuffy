@@ -8,11 +8,17 @@ import lombok.Data;
 @Data
 public class ProfileDetailsResponse {
 
+  @JsonProperty("Id")
+  private Long id;
+
   @JsonProperty("Name")
   private String name;
 
   @JsonProperty("PhoneNumber")
   private String phone;
+
+  @JsonProperty("UserType")
+  private String userType;
 
   @JsonProperty("VehicleDetails")
   private VehicleDetailsResponse vehicleDetails;

@@ -1,20 +1,21 @@
 package com.eg.ride.model.request;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
-public class LocationDetails {
+@Builder
+public class RidePriceRequest {
 
-  @JsonProperty("Latitude")
+  @JsonProperty("Pickup")
   @NotNull
-  private Double latitude;
+  private @Valid LocationDetails pickup;
 
-  @JsonProperty("Longitude")
+  @JsonProperty("Dropoff")
   @NotNull
-  private Double longitude;
+  private @Valid LocationDetails dropoff;
+
 }

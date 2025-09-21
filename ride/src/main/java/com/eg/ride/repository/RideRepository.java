@@ -1,8 +1,8 @@
 package com.eg.ride.repository;
 
 
-import com.eg.ride.entity.RideEntity;
-import com.eg.ride.entity.RideStatusEntity;
+import com.eg.ride.model.entity.RideEntity;
+import com.eg.ride.model.entity.RideStatusEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -12,5 +12,12 @@ public class Constants {
   public static final String INCORRECT_RIDE_STATUS_MESSAGE = "Ride has wrong status";
   public static final String RIDE_STATUS_CANNOT_BE_UPDATED = "This ride status cannot be updated as status is ";
   public static final String WRONG_RIDE_STATUS_TO_UPDATE = "Cannot update ride status to requested";
+  public static final String WRONG_USER_TYPE_MESSAGE = "Wrong user type";
+  public static final String DRIVER_DETAILS_NOT_FOUND_MESSAGE = "Driver details not found";
+  public static final String RIDE_TYPE_NOT_FOUND = "Ride type not found";
+
+
+  // To be added in config
+  public static final Double AVERAGE_SPEED = 40.00;
 
 }

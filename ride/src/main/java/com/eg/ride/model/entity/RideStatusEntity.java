@@ -1,4 +1,4 @@
-package com.eg.ride.entity;
+package com.eg.ride.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
