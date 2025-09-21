@@ -1,5 +1,6 @@
 package com.eg.user.util;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -15,11 +16,15 @@ public class JwtUtil {
   @Value("${security.jwt.secret}")
   private String secretKey;
 
-  public String generateToken(String username) {
+  public String generateToken(String userId, String name,
+                              String userType, String customerStatus) {
     // 1 hour
     long expirationMs = 3600000;
     return Jwts.builder()
-      .setSubject(username)
+      .setSubject(userId)
+      .claim("name", name)
+      .claim("role", userType)
+      .claim("status", customerStatus)
       .setIssuedAt(new Date())
       .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
       .signWith(jwtSigningKey(secretKey))
@@ -31,18 +36,16 @@ public class JwtUtil {
     return Keys.hmacShaKeyFor(jwtSecret.getBytes());
   }
 
-  public boolean validateToken(String token, String username) {
-    return username.equals(extractUsername(token)) &&
-      !isTokenExpired(token);
+  public boolean validateToken(String token) {
+    return !isTokenExpired(token);
   }
 
-  public String extractUsername(String token) {
+  public Claims extractClaims(String token) {
     return Jwts.parserBuilder()
       .setSigningKey(jwtSigningKey(secretKey))
       .build()
       .parseClaimsJws(token)
-      .getBody()
-      .getSubject();
+      .getBody();
   }
 
   private boolean isTokenExpired(String token) {

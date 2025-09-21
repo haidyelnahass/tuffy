@@ -23,6 +23,7 @@ public interface UserMapper {
 
   @Mapping(target = "customerStatus", source = "user.customerStatus.value")
   @Mapping(target = "registrationDate", qualifiedByName = "mapDate", source = "createDate")
+  @Mapping(target = "userType", source = "user.userTypeEntity.value")
   ProfileDetailsResponse map(UserEntity user);
 
   @Named("encodePassword")

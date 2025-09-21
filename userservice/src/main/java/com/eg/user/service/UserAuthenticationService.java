@@ -61,7 +61,8 @@ public class UserAuthenticationService {
     userRepository.save(user);
     return UserLoginResponse.builder()
       .accessToken(jwtUtil
-        .generateToken(user.getId() + " " + user.getName()))
+        .generateToken(user.getId().toString(), user.getName(),
+          user.getUserTypeEntity().getValue(), user.getCustomerStatus().getValue()))
       .build();
   }
 
