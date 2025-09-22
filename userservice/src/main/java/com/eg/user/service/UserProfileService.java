@@ -7,7 +7,7 @@ import com.eg.user.mapper.UserMapper;
 import com.eg.user.mapper.VehicleMapper;
 import com.eg.user.model.entity.UserEntity;
 import com.eg.user.model.entity.VehicleEntity;
-import com.eg.user.model.enums.UserTypeEnum;
+import com.eg.common.model.enums.UserTypeEnum;
 import com.eg.user.model.request.ProfileUpdateRequest;
 import com.eg.user.model.response.ProfileDetailsResponse;
 import com.eg.user.repository.UserRepository;

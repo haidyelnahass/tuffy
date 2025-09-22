@@ -1,16 +1,15 @@
 package com.eg.user.service;
 
 import com.eg.user.exception.BadRequestException;
-import com.eg.user.exception.IncorrectPasswordEnteredException;
 import com.eg.user.exception.NotFoundException;
 import com.eg.user.exception.model.ErrorCode;
 import com.eg.user.model.entity.UserEntity;
-import com.eg.user.model.enums.CustomerStatusEnum;
+import com.eg.common.model.enums.CustomerStatusEnum;
 import com.eg.user.model.request.UserLoginRequest;
 import com.eg.user.model.response.UserLoginResponse;
 import com.eg.user.repository.CustomerStatusRepository;
 import com.eg.user.repository.UserRepository;
-import com.eg.user.util.JwtUtil;
+import com.eg.common.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

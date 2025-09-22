@@ -1,7 +1,7 @@
 package com.eg.tracking.util.jobs;
 
 
-import com.eg.tracking.util.RedisCacheManager;
+import com.eg.common.util.RedisCacheManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

@@ -1,6 +1,6 @@
 package com.eg.user.model.request;
 
-import com.eg.user.model.enums.UserTypeEnum;
+import com.eg.common.model.enums.UserTypeEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

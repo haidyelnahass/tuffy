@@ -1,7 +1,7 @@
 package com.eg.ride.controller;
 
 import com.eg.ride.service.RideStatusSseService;
-import com.eg.ride.util.RedisCacheManager;
+import com.eg.common.util.RedisCacheManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

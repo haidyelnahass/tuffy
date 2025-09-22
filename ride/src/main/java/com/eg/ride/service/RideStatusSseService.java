@@ -4,7 +4,7 @@ import com.eg.ride.model.entity.RideEntity;
 import com.eg.ride.model.enums.RideStatusEnum;
 import com.eg.ride.repository.RideRepository;
 import com.eg.ride.repository.RideStatusRepository;
-import com.eg.ride.util.RedisCacheManager;
+import com.eg.common.util.RedisCacheManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
