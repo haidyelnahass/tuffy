@@ -1,6 +1,5 @@
 package com.eg.ride.controller;
 
-import com.eg.ride.model.request.DriverAssignmentRequest;
 import com.eg.ride.model.request.RidePriceRequest;
 import com.eg.ride.model.request.RideRequest;
 import com.eg.ride.model.request.UpdateRideStatusRequest;
@@ -11,6 +10,7 @@ import com.eg.ride.service.RideService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,44 +28,51 @@ public class RideController {
   private final RideService rideService;
 
   @PostMapping
+  @PreAuthorize("hasRole('RIDER')")
   public ResponseEntity<RideResponse> requestRide(@RequestHeader("UserId") Long userId,
                                                   @RequestHeader("Authorization") String authorization,
                                                   @Valid @RequestBody RideRequest rideRequest) {
     return ResponseEntity.ok(rideService.requestRide(userId, rideRequest));
   }
 
-  @PostMapping("/{rideId}/assign-driver")
-  public ResponseEntity<Void> assignDriver(@PathVariable Long rideId,
-                                           @RequestHeader("Authorization") String authorization,
-                                           @Valid @RequestBody DriverAssignmentRequest request) {
-    // TODO need to calculate ETA until pickup arrival..
-    rideService.assignDriver(authorization, rideId, request);
-    return ResponseEntity.noContent().build();
-  }
-
   @GetMapping("/{rideId}")
-  public ResponseEntity<RideDetailsResponse> getRideDetails(@PathVariable Long rideId,
-                                                            @RequestHeader("Authorization") String authorization) {
-    return ResponseEntity.ok(rideService.getRideDetails(authorization, rideId));
+  public ResponseEntity<RideDetailsResponse> getRideDetails(@PathVariable Long rideId) {
+    // TODO how to track driver after he has been assigned?? (SSE for driver's time??)
+    return ResponseEntity.ok(rideService.getRideDetails(rideId));
   }
 
   @PutMapping("/{rideId}")
   public void updateRideStatus(@PathVariable Long rideId,
                                @Valid @RequestBody UpdateRideStatusRequest request) {
+    // TODO check this api maybe we don't need it anymore.
     rideService.updateRideStatus(rideId, request);
   }
 
-  // TODO Ride Payment API
+  @PutMapping("/{rideId}/start")
+  @PreAuthorize("hasRole('DRIVER')")
+  public void startRide(@PathVariable Long rideId) {
+    rideService.startRide(rideId);
+  }
 
-  // TODO ride types & pricing
+  @PutMapping("/{rideId}/complete")
+  @PreAuthorize("hasRole('DRIVER')")
+  public void completeRide(@PathVariable Long rideId) {
+    rideService.completeRide(rideId);
+  }
 
-  @GetMapping("/pricing")
+  @PutMapping("/{rideId}/cancel")
+  public void cancelRide(@PathVariable Long rideId) {
+    rideService.cancelRide(rideId);
+  }
+
+  @PostMapping("/pricing")
+  @PreAuthorize("hasRole('RIDER')")
   public RidePriceResponse getRidePricingOptions(@Valid @RequestBody RidePriceRequest request) {
     return rideService.getRidePricingOptions(request);
   }
 
-  // TODO API to complete ride (and publish driver status available event) // cancel ride
-
+  // TODO Ride Payment API
   // TODO add logic for live fare computation
+  // TODO job to check rides expired as expected
 
 }

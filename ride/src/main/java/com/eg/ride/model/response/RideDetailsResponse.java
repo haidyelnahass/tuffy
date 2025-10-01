@@ -1,7 +1,7 @@
 package com.eg.ride.model.response;
 
 
-import com.eg.ride.model.request.LocationDetails;
+import com.eg.common.model.LocationDetails;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
@@ -24,4 +24,7 @@ public class RideDetailsResponse {
 
   @JsonProperty("Price")
   private Double price;
+
+  @JsonProperty("EstimatedPickupTime")
+  private Integer estimatedPickupTime;
 }

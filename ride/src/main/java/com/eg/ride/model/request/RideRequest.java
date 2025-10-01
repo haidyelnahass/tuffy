@@ -1,11 +1,12 @@
 package com.eg.ride.model.request;
 
-import com.eg.ride.model.enums.RideTypeEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
+import com.eg.common.model.LocationDetails;
+
 
 @Data
 @Builder
@@ -25,5 +26,5 @@ public class RideRequest {
 
   @JsonProperty("RideType")
   @NotNull
-  private RideTypeEnum rideType;
+  private String rideType;
 }

@@ -1,6 +1,6 @@
 package com.eg.tracking.events;
 
-import com.eg.tracking.model.message.StatusUpdateMessage;
+import com.eg.common.model.message.StatusUpdateMessage;
 import com.eg.tracking.service.TrackingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -14,7 +14,7 @@ public class DriverStatusListener {
 
   @KafkaListener(topics = "${spring.kafka.driver-status-updated}", groupId = "${spring.kafka.group-id}")
   public void consumeStatusUpdate(StatusUpdateMessage message) {
-    // TODO to be produced by ride service and tracking service
+    // TODO to be produced by ride service and matching service
     trackingService.updateDriverStatus(message);
   }
 }

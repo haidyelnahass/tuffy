@@ -1,6 +1,6 @@
 package com.eg.tracking.model.request;
 
-import com.eg.tracking.model.enums.DriverStatusEnum;
+import com.eg.common.model.enums.DriverStatusEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

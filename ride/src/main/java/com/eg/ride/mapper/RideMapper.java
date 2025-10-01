@@ -3,13 +3,11 @@ package com.eg.ride.mapper;
 import com.eg.ride.client.model.response.ProfileDetailsResponse;
 import com.eg.ride.model.entity.RideEntity;
 import com.eg.ride.model.entity.RideTypeEntity;
-import com.eg.ride.model.request.LocationDetails;
-import com.eg.ride.model.request.RidePriceRequest;
+import com.eg.common.model.LocationDetails;
+import com.eg.ride.model.message.RideRequestedMessage;
 import com.eg.ride.model.response.RideDetailsResponse;
-import com.eg.ride.model.response.RidePriceResponse;
 import com.eg.ride.model.response.RideTypeDetails;
 import com.eg.ride.model.response.UserDetails;
-import com.eg.ride.util.Util;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -50,6 +48,12 @@ public interface RideMapper {
   @Mapping(target = "price", expression = "java(RideMapper.calculatePrice(source.getBasePrice(), "
     + "source.getPricePerKm(), distance))")
   RideTypeDetails map(RideTypeEntity source, @Context Double distance);
+
+  @Mapping(target = "rideId", source = "id")
+  @Mapping(target = "pickup", qualifiedByName = "MapLocation", source = "source.pickup")
+  @Mapping(target = "dropOff", qualifiedByName = "MapLocation", source = "source.dropOff")
+  @Mapping(target = "type", source = "source.type.type")
+  RideRequestedMessage map(RideEntity source);
 
 
   static Double calculatePrice(Double basePrice, Double pricePerKm,

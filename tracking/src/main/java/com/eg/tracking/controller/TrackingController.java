@@ -2,7 +2,6 @@ package com.eg.tracking.controller;
 
 import com.eg.tracking.model.request.UpdateLocationRequest;
 import com.eg.tracking.model.response.DriverLocationResponse;
-import com.eg.tracking.model.response.NearbyDriverLocation;
 import com.eg.tracking.model.response.NearbyLocationsResponse;
 import com.eg.tracking.service.TrackingService;
 import jakarta.validation.constraints.NotNull;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/tracking")
@@ -41,7 +38,6 @@ public class TrackingController {
   }
 
   @GetMapping("/drivers/location")
-  @PreAuthorize("hasRole('RIDER')")
   public ResponseEntity<NearbyLocationsResponse> getNearbyDriverLocations(@NotNull @RequestParam double lat,
                                                                           @NotNull @RequestParam double lon,
                                                                           @NotNull @RequestParam int radius,

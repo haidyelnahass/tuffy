@@ -2,9 +2,9 @@ package com.eg.tracking.service;
 
 import com.eg.tracking.exception.BadRequestException;
 import com.eg.tracking.mapper.TrackingMapper;
-import com.eg.tracking.model.enums.DriverStatusEnum;
+import com.eg.common.model.enums.DriverStatusEnum;
 import com.eg.tracking.model.message.DriverLocationMessage;
-import com.eg.tracking.model.message.StatusUpdateMessage;
+import com.eg.common.model.message.StatusUpdateMessage;
 import com.eg.tracking.model.request.UpdateLocationRequest;
 import com.eg.tracking.model.response.DriverLocationResponse;
 import com.eg.tracking.model.response.NearbyDriverLocation;

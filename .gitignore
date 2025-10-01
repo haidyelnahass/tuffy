@@ -1,0 +1,19 @@
+# IDE files
+.idea/
+**/idea/
+*.iml
+.vscode/
+
+# Java/Spring Boot Build Artifacts
+target/
+!**/src/main/**/target/  # Exception if you need to commit something under target/
+
+# Logs and PID files
+*.log
+*.pid
+
+# Maven/Gradle Wrapper
+!/mvnw
+!/mvnw.cmd
+!/gradlew
+!/gradlew.bat

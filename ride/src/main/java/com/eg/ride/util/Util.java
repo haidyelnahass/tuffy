@@ -3,6 +3,8 @@ package com.eg.ride.util;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Util {
 
@@ -24,5 +26,9 @@ public class Util {
   public static int calculateEstimatedTime(Double distance, Double avgSpeedPerKm) {
     if (avgSpeedPerKm <= 0) throw new IllegalArgumentException("Speed must be > 0");
     return (int) Math.round((distance / avgSpeedPerKm) * 60);
+  }
+
+  public static Double splitLocation(String input, String splitter, int index) {
+    return Objects.nonNull(input)? Double.parseDouble(input.split(splitter)[index]) : null;
   }
 }
