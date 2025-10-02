@@ -118,7 +118,7 @@ public class UserRegistrationService {
     userRepository.save(user);
     ProfileDetailsResponse details = UserMapper.INSTANCE.map(user);
     kafkaProducerUtil.sendMessage(accountTopic, details);
-    // TODO maybe account ready topic is not required
+    // TODO maybe account ready topic is not required -- send notification (notification service TODO)
   }
 
 

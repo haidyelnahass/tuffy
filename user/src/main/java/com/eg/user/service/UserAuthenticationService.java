@@ -27,7 +27,6 @@ public class UserAuthenticationService {
 
   private final UserRepository userRepository;
   private final CustomerStatusRepository customerStatusRepository;
-
   private final JwtUtil jwtUtil;
 
   @Value("${spring.login-trials-allowed:3}")
@@ -43,7 +42,7 @@ public class UserAuthenticationService {
     if (!checkHashMatch(request.getPassword(), user.getPassword())) {
       String exceptionMessage;
       ErrorCode errorCode;
-      if (user.getLoginAttempts().equals(loginTrialsAllowed)) {
+      if (user.getLoginAttempts() >= loginTrialsAllowed) {
         user.setCustomerStatus(customerStatusRepository.findByValue(CustomerStatusEnum.BLOCKED.name())
           .orElseThrow(() -> new BadRequestException(CUSTOMER_STATUS_NOT_FOUND,
             ErrorCode.DATA_NOT_FOUND)));
