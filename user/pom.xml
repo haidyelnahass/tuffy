@@ -147,9 +147,18 @@
     <dependency>
       <groupId>com.github.haidyelnahass.tuffy</groupId>
       <artifactId>common-lib</artifactId>
-      <version>1.0.0</version>
+      <version>v2.0.0</version>
     </dependency>
-
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sendgrid</groupId>
+      <artifactId>sendgrid-java</artifactId>
+      <version>4.9.3</version>
+    </dependency>
   </dependencies>
 
   <repositories>

@@ -29,4 +29,6 @@ public class Constants {
 
   // HEADERS
   public static final String USER_ID_HEADER = "UserId";
+
+  public static final String FAILED_TO_SEND_EMAIL = "Failed to send email";
 }
