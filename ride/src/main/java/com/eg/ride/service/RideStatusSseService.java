@@ -67,21 +67,22 @@ public class RideStatusSseService {
     RideEntity rideEntity = validateRideEntity(rideId);
     return Flux.interval(Duration.ofSeconds(5))
       .onBackpressureDrop()
-      .map(tick -> {
-        DriverLocationResponse locationResponse
-          = trackingClient.getDriverLocation(authorization, rideEntity.getRiderId(),
-          rideEntity.getDriverId());
-        Integer estimatedArrivalTime
-          = Util.calculateEstimatedTime(calculateDistance(Util.splitLocation(rideEntity.getPickup(), ",",0),
-            Util.splitLocation(rideEntity.getPickup(), ",",1),
-            locationResponse.getLatitude(), locationResponse.getLongitude()), AVERAGE_SPEED);
-        return DriverInquiryResponse.builder()
-          .estimatedArrivalTime(estimatedArrivalTime)
-          .latitude(locationResponse.getLatitude())
-          .longitude(locationResponse.getLongitude())
-          .lastUpdateDate(locationResponse.getLastUpdateDate())
-          .build();
-      })
+      .flatMap(tick ->
+        trackingClient.getDriverLocation(authorization, rideEntity.getRiderId(), rideEntity.getDriverId())
+          .map(locationResponse -> {
+            Integer estimatedArrivalTime = Util.calculateEstimatedTime(calculateDistance(
+              Util.splitLocation(rideEntity.getPickup(), ",",0),
+              Util.splitLocation(rideEntity.getPickup(), ",",1),
+              locationResponse.getLatitude(), locationResponse.getLongitude()), AVERAGE_SPEED);
+
+            return DriverInquiryResponse.builder()
+              .estimatedArrivalTime(estimatedArrivalTime)
+              .latitude(locationResponse.getLatitude())
+              .longitude(locationResponse.getLongitude())
+              .lastUpdateDate(locationResponse.getLastUpdateDate())
+              .build();
+          })
+      )
       .takeUntil(response -> response.getEstimatedArrivalTime() < 1);
   }
 

@@ -23,7 +23,7 @@ public class UserClient {
   }
 
   public ProfileDetailsResponse getUserDetails(Long userId) {
-      return webClient.get().uri("/v1/users/profile")
+      return webClient.get().uri("/internal/v1/users/details")
         .header(USER_ID_HEADER, userId.toString())
         .retrieve()
         .onStatus(

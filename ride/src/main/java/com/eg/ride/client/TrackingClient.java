@@ -23,10 +23,10 @@ public class TrackingClient {
   }
 
 
-  public DriverLocationResponse getDriverLocation(String authorization,
+  public Mono<DriverLocationResponse> getDriverLocation(String authorization,
                                                   Long userId,
                                                   Long driverId) {
-    return webClient.get().uri("/v1/tracking/drivers/"+ driverId + "location")
+    return webClient.get().uri("/v1/tracking/drivers/"+ driverId + "/location")
       .header(AUTHORIZATION, authorization)
       .header("UserId", userId.toString())
       .retrieve()
@@ -41,8 +41,7 @@ public class TrackingClient {
         HttpStatusCode::is5xxServerError,
         response -> Mono.error(new RuntimeException("Server error!"))
       )
-      .bodyToMono(DriverLocationResponse.class)
-      .block();
+      .bodyToMono(DriverLocationResponse.class);
   }
 
 }

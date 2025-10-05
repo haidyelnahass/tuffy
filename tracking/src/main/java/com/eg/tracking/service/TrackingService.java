@@ -85,14 +85,14 @@ public class TrackingService {
 
   public NearbyLocationsResponse getNearbyDriverLocations(double lat, double lon,
                                                           int radius, int limit) {
-
+    log.info("getNearbyDriverLocations:: check cache");
     GeoResults<RedisGeoCommands.GeoLocation<Object>> results
     = redisCacheManager.getNearbyLocationsFromCache(DRIVERS_LOCATION_KEY, lon, lat, radius, limit);
-
+    log.info("findBestDriverLocation:: check results");
     if (results == null) {
       return NearbyLocationsResponse.builder().nearbyLocations(List.of()).build();
     }
-
+    log.info("findBestDriverLocation:: map results");
     List<NearbyDriverLocation> locations =  results.getContent().stream()
       .filter(result -> {
         String driverIdKey = result.getContent().getName().toString();
@@ -114,6 +114,7 @@ public class TrackingService {
           .distance(distance).build();
       })
       .toList();
+    log.info("findBestDriverLocation:: locations {}", locations);
     return NearbyLocationsResponse.builder()
       .nearbyLocations(locations)
       .build();

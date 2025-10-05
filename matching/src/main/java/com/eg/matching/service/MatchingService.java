@@ -32,12 +32,14 @@ public class MatchingService {
   private String rideMatchFailedTopic;
 
   public void matchRide(RideRequestedMessage message) {
+    log.info("matchRide:: finding best driver match");
     Optional<NearbyDriverLocation> bestMatch = findBestDriverLocation(
       message.getPickup().getLatitude(),
       message.getPickup().getLongitude()
     );
-
+    log.info("matchRide:: check if best match found");
     if (bestMatch.isEmpty()) {
+      log.error("matchRide:: could not find nearby drivers");
       kafkaProducerUtil.sendMessage(rideMatchFailedTopic,
         RideMatchFailedMessage.builder()
           .rideId(message.getRideId())
@@ -46,7 +48,7 @@ public class MatchingService {
     }
 
     NearbyDriverLocation driver = bestMatch.get();
-
+    log.info("matchRide:: send assigned event");
     kafkaProducerUtil.sendMessage(rideAssignedTopic,
       DriverAssignmentMessage.builder()
         .rideId(message.getRideId())
@@ -62,10 +64,12 @@ public class MatchingService {
   public Optional<NearbyDriverLocation> findBestDriverLocation(double lat, double lon) {
     for (int attempt = 1; attempt <= 10; attempt++) {
       for (int radius = 5; radius <= 40; radius += 5) {
+      log.info("findBestDriverLocation:: attempt {}, radius {}", attempt, radius);
         NearbyLocationsResponse response =
           trackingClient.getNearbyDriverLocations(lat, lon, radius, Constants.LIMIT);
-
+        log.info("findBestDriverLocation:: response {}", response);
         if (response != null && !response.getNearbyLocations().isEmpty()) {
+          log.info("findBestDriverLocation:: return nearby locations");
           return response.getNearbyLocations().stream()
             .filter(loc -> loc.getDistance() > 0)
             .min(Comparator.comparingDouble(NearbyDriverLocation::getDistance));
@@ -73,8 +77,10 @@ public class MatchingService {
       }
 
       try {
+        log.info("findBestDriverLocation:: wait 3 sec");
         Thread.sleep(3000); // 3 sec cool-off
       } catch (InterruptedException e) {
+        log.error("findBestDriverLocation:: current thread interrupted");
         Thread.currentThread().interrupt();
       }
     }
