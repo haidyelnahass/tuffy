@@ -145,7 +145,7 @@
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.github.haidyelnahass.commons</groupId>
+      <groupId>com.github.haidyelnahass.tuffy</groupId>
       <artifactId>common-lib</artifactId>
       <version>1.0.0</version>
     </dependency>
