@@ -54,7 +54,7 @@
 			<scope>test</scope>
 		</dependency>
     <dependency>
-      <groupId>com.eg.common</groupId>
+      <groupId>com.github.haidyelnahass.tuffy</groupId>
       <artifactId>common-lib</artifactId>
       <version>1.0.0</version>
     </dependency>
