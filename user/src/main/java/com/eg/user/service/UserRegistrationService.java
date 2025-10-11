@@ -72,7 +72,7 @@ public class UserRegistrationService {
     } else {
       log.info("registerUser:: prepare user entity");
       UserEntity user = UserMapper.INSTANCE.map(request);
-      CustomerStatusEntity statusEntity = findStatus(CustomerStatusEnum.PENDING.name());
+      CustomerStatusEntity statusEntity = findStatus(CustomerStatusEnum.ACTIVE.name()); //TODO temp until sendgrid issue fixed
       user.setCustomerStatus(statusEntity);
       user.setUserTypeEntity(findUserType(request.getUserType().toString()));
       log.info("registerUser:: saving user entity");
