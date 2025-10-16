@@ -27,6 +27,27 @@ public class Constants {
   public static final String WRONG_PASSWORD_ENTERED_TOO_MANY_TIMES = "Wrong password entered too many times, "
     + "account is now blocked";
 
+  public static final String ONLY_EMAIL_OR_PHONE_SHOULD_BE_SENT =
+    "Only email or phone should be sent in the request body";
+
+  public static final String WRONG_TOKEN_RECEIVED
+    = "Wrong token received";
+
+  public static final String TOKEN_EXPIRED
+    = "Token expired";
+
+
+  // MAIL
+  public static final String CONFIRMATION_CODE_SUBJECT = "Confirmation Code - Tuffy";
+  public static final String CONFIRMATION_CODE_TEXT = "Your confirmation code is <confirmation_code>. Please use it "
+    + "within the next 10 minutes";
+
+  public static final String RESET_PASSWORD_SUBJECT = "Reset Password - Tuffy";
+
+  public static final String RESET_PASSWORD_TEXT = "To reset your password, please follow this link: <reset_link>, this "
+    + "link will be valid for the next 10 minutes";
+
+
   // HEADERS
   public static final String USER_ID_HEADER = "UserId";
 

@@ -34,6 +34,8 @@ import static com.eg.user.exception.model.ErrorCode.USER_ALREADY_EXISTS;
 import static com.eg.user.exception.model.ErrorCode.USER_NOT_FOUND;
 import static com.eg.user.exception.model.ErrorCode.WRONG_CONFIRMATION_CODE_ENTERED;
 import static com.eg.user.exception.model.ErrorCode.WRONG_REQUEST_BODY;
+import static com.eg.user.util.Constants.CONFIRMATION_CODE_SUBJECT;
+import static com.eg.user.util.Constants.CONFIRMATION_CODE_TEXT;
 import static com.eg.user.util.Constants.CUSTOMER_STATUS_NOT_FOUND;
 import static com.eg.user.util.Constants.MISSING_VEHICLE_DETAILS;
 import static com.eg.user.util.Constants.USER_ALREADY_CONFIRMED_HIS_EMAIL;
@@ -80,7 +82,7 @@ public class UserRegistrationService {
       if (request.getUserType().equals(UserTypeEnum.DRIVER)) {
         log.info("registerUser:: prepare vehicle details");
         VehicleEntity vehicleEntity = VehicleMapper.INSTANCE.map(request.getVehicleDetails());
-        vehicleEntity.setUserEntity(user);
+        vehicleEntity.setUser(user);
         log.info("registerUser:: save vehicle details");
         vehicleRepository.save(vehicleEntity);
       }
@@ -102,7 +104,9 @@ public class UserRegistrationService {
     log.info("sendConfirmationEmail:: generate code and send email");
     Integer confirmationCode = generateRandomConfirmationCode();
     redisCacheManager.saveToCache(user.getId().toString(), confirmationCode);
-    mailService.sendMail(confirmationCode, user.getEmail());
+    mailService.sendMail(CONFIRMATION_CODE_TEXT.replace("<confirmation_code>", confirmationCode.toString()),
+      CONFIRMATION_CODE_SUBJECT,
+      user.getEmail());
   }
 
   public void confirmProfile(ProfileConfirmationRequest request) {

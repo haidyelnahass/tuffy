@@ -133,7 +133,7 @@ public class UserRegistrationServiceTest {
       .thenReturn(Optional.of(buildUserEntity(1L, UserTypeEnum.RIDER, CustomerStatusEnum.PENDING)));
 
     doNothing().when(redisCacheManager).saveToCache(any(), any());
-    doNothing().when(mailService).sendMail(any(), any());
+    doNothing().when(mailService).sendMail(any(), any(), any());
 
     userRegistrationService.sendConfirmationEmail(buildEmailConfirmationRequest());
 

@@ -9,13 +9,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import static com.eg.user.util.Constants.CONFIRMATION_CODE_SUBJECT;
+import static com.eg.user.util.Constants.CONFIRMATION_CODE_TEXT;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class MailServiceTest {
+class MailServiceTest {
 
   @InjectMocks
   private MailService mailService;
@@ -26,7 +28,7 @@ public class MailServiceTest {
   @Test
   void sendMailSuccessfully() {
     doNothing().when(javaMailSender).send((SimpleMailMessage) any());
-    mailService.sendMail(211222, "aa@aa.com");
+    mailService.sendMail(CONFIRMATION_CODE_TEXT, CONFIRMATION_CODE_SUBJECT, "aa@aa.com");
     verify(javaMailSender, times(1)).send((SimpleMailMessage) any());
   }
 

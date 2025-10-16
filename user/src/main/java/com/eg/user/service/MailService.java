@@ -27,11 +27,8 @@ public class MailService {
   @Value("${sendgrid.from-mail}")
   private String fromMail;
 
-  public void sendMail(Integer randomNumber, String to) {
+  public void sendMail(String contentText, String subject, String to) {
 
-    String contentText = "Your confirmation code is " + randomNumber
-      + ". Please use it within the next 10 minutes";
-    String subject = "Confirmation Code - Tuffy";
     Email from = new Email(fromMail, "Tuffy Team");
     Email toEmail = new Email(to);
     Content content = new Content("text/plain", contentText);

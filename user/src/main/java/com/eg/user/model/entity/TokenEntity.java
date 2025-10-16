@@ -1,5 +1,6 @@
 package com.eg.user.model.entity;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,24 +20,22 @@ import java.time.LocalDateTime;
 
 @Builder
 @Entity
-@Table(name = "VEHICLE")
+@Table(name = "TOKEN")
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class VehicleEntity {
+public class TokenEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column
-  private String model;
+  private String value;
 
-  @Column
-  private String capacity;
-
-  @Column
-  private String plateNumber;
+  @JoinColumn(name = "USER_ID", referencedColumnName = "id")
+  @ManyToOne
+  private UserEntity user;
 
   @Column
   private LocalDateTime createDate;
@@ -44,9 +43,8 @@ public class VehicleEntity {
   @Column
   private LocalDateTime updateDate;
 
-  @JoinColumn(name = "DRIVER_ID", referencedColumnName = "id")
-  @ManyToOne
-  private UserEntity user;
+  @Column
+  private LocalDateTime expiryDate;
 
   @PrePersist
   protected void onCreate() {
@@ -57,4 +55,5 @@ public class VehicleEntity {
   protected void onUpdate() {
     this.updateDate = LocalDateTime.now();
   }
+
 }
