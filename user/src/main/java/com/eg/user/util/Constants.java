@@ -36,6 +36,8 @@ public class Constants {
   public static final String TOKEN_EXPIRED
     = "Token expired";
 
+  public static final String TOKEN_TYPE = "Bearer";
+
 
   // MAIL
   public static final String CONFIRMATION_CODE_SUBJECT = "Confirmation Code - Tuffy";

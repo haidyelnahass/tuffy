@@ -4,7 +4,7 @@
   <groupId>com.github.haidyelnahass.tuffy</groupId>
   <artifactId>common-lib</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0</version>
+  <version>v3.0.0</version>
   <name>common-lib</name>
   <url>http://maven.apache.org</url>
   <parent>

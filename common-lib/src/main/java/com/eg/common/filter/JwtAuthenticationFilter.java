@@ -45,11 +45,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     String token = authHeader.substring(7);
 
     try {
-      if (!jwtUtil.validateToken(token)) {
+      if (!jwtUtil.validateToken(token, true)) {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         return;
       }
-      Claims claims = jwtUtil.extractClaims(token);
+      Claims claims = jwtUtil.extractClaims(token, true);
 
       String userId = claims.getSubject();
       String role = claims.get("role", String.class); // DRIVER, RIDER

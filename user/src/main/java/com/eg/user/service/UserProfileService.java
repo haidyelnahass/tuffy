@@ -29,7 +29,7 @@ public class UserProfileService {
     UserEntity user = checkExistenceOfUser(profileId);
     ProfileDetailsResponse response = UserMapper.INSTANCE.map(user);
     if (user.getUserTypeEntity().getValue().equals(UserTypeEnum.DRIVER.name())) {
-      VehicleEntity vehicleEntity = vehicleRepository.findByUserEntity(user)
+      VehicleEntity vehicleEntity = vehicleRepository.findByUser(user)
         .orElseThrow(() -> new BadRequestException(MISSING_VEHICLE_DETAILS,
           ErrorCode.DATA_NOT_FOUND));
       response.setVehicleDetails(VehicleMapper.INSTANCE.map(vehicleEntity));

@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface VehicleRepository extends JpaRepository<VehicleEntity, Long> {
 
-  Optional<VehicleEntity> findByUserEntity(UserEntity userEntity);
+  Optional<VehicleEntity> findByUser(UserEntity userEntity);
 }

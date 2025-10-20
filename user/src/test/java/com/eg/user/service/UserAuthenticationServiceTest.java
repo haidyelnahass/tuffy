@@ -1,46 +1,37 @@
 package com.eg.user.service;
 
 
+import com.eg.common.model.TokenDetails;
 import com.eg.common.model.enums.CustomerStatusEnum;
 import com.eg.common.util.JwtUtil;
 import com.eg.user.exception.BadRequestException;
 import com.eg.user.exception.NotFoundException;
 import com.eg.user.model.entity.UserEntity;
-import com.eg.user.model.response.ProfileDetailsResponse;
-import com.eg.user.model.response.UserLoginResponse;
+import com.eg.user.model.response.UserTokenResponse;
 import com.eg.user.repository.CustomerStatusRepository;
 import com.eg.user.repository.UserRepository;
-import com.eg.user.repository.VehicleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.Field;
 import java.util.Optional;
 
-import static com.eg.common.model.enums.UserTypeEnum.DRIVER;
 import static com.eg.common.model.enums.UserTypeEnum.RIDER;
 import static com.eg.user.util.TestConstants.buildCustomerStatusEntity;
-import static com.eg.user.util.TestConstants.buildProfileUpdateRequest;
 import static com.eg.user.util.TestConstants.buildUserEntity;
 import static com.eg.user.util.TestConstants.buildUserLoginRequest;
-import static com.eg.user.util.TestConstants.buildVehicleEntity;
 import static com.eg.user.util.TestConstants.buildWrongUserLoginRequest;
-import static com.eg.user.util.Util.encodePassword;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UserAuthenticationServiceTest {
+class UserAuthenticationServiceTest {
 
   @InjectMocks
   private UserAuthenticationService userAuthenticationService;
@@ -70,11 +61,11 @@ public class UserAuthenticationServiceTest {
       .thenReturn(Optional.of(user));
     when(userRepository.save(any()))
       .thenReturn(user);
-    when(jwtUtil.generateToken(any(), any(),
-      any(), any())).thenReturn(encodePassword("112233"));
-    UserLoginResponse userLoginResponse
+    when(jwtUtil.generateAccessToken(any(), any(),
+      any(), any())).thenReturn(TokenDetails.builder().token("xxx").build());
+    UserTokenResponse userTokenResponse
     = userAuthenticationService.login(buildUserLoginRequest());
-    assertNotNull(userLoginResponse.getAccessToken());
+    assertNotNull(userTokenResponse.getAccessToken());
   }
 
   @Test

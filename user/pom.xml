@@ -151,7 +151,7 @@
     <dependency>
       <groupId>com.github.haidyelnahass.tuffy</groupId>
       <artifactId>common-lib</artifactId>
-      <version>v2.0.0</version>
+      <version>v3.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>

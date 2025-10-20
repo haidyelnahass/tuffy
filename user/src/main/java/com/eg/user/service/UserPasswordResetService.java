@@ -2,11 +2,11 @@ package com.eg.user.service;
 
 import com.eg.user.exception.BadRequestException;
 import com.eg.user.exception.model.ErrorCode;
-import com.eg.user.model.entity.TokenEntity;
+import com.eg.user.model.entity.ResetTokenEntity;
 import com.eg.user.model.entity.UserEntity;
 import com.eg.user.model.request.ForgotPasswordRequest;
 import com.eg.user.model.request.ResetPasswordRequest;
-import com.eg.user.repository.TokenRepository;
+import com.eg.user.repository.ResetTokenRepository;
 import com.eg.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class UserPasswordResetService {
 
   private final MailService mailService;
 
-  private final TokenRepository tokenRepository;
+  private final ResetTokenRepository resetTokenRepository;
 
   private final UserRepository userRepository;
 
@@ -49,7 +49,7 @@ public class UserPasswordResetService {
         .replace("<reset_link>", redirectionUrl + "?token=" + generatedToken),
       RESET_PASSWORD_SUBJECT, user.getEmail());
 
-    tokenRepository.save(TokenEntity.builder()
+    resetTokenRepository.save(ResetTokenEntity.builder()
       .value(generatedToken)
       .user(user)
       .expiryDate(LocalDateTime.now().plusMinutes(10))
@@ -76,18 +76,18 @@ public class UserPasswordResetService {
   }
 
   private UserEntity validateAndRetrieveUserEntity(ResetPasswordRequest request) {
-    Optional<TokenEntity> optionalToken = tokenRepository.findByValue(request.getToken());
+    Optional<ResetTokenEntity> optionalToken = resetTokenRepository.findByValue(request.getToken());
     if (optionalToken.isEmpty()) {
       throw new BadRequestException(WRONG_TOKEN_RECEIVED,
         ErrorCode.DATA_NOT_FOUND);
     }
-    TokenEntity tokenEntity = optionalToken.get();
+    ResetTokenEntity resetTokenEntity = optionalToken.get();
 
-    if(tokenEntity.getExpiryDate().isBefore(LocalDateTime.now())) {
+    if(resetTokenEntity.getExpiryDate().isBefore(LocalDateTime.now())) {
       throw new BadRequestException(TOKEN_EXPIRED,
         ErrorCode.WRONG_REQUEST_BODY);
     }
 
-    return tokenEntity.getUser();
+    return resetTokenEntity.getUser();
   }
 }

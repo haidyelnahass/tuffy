@@ -2,7 +2,6 @@ package com.eg.user.util;
 
 import com.eg.common.model.enums.CustomerStatusEnum;
 import com.eg.common.model.enums.UserTypeEnum;
-import com.eg.common.util.JwtUtil;
 import com.eg.user.model.entity.CustomerStatusEntity;
 import com.eg.user.model.entity.UserEntity;
 import com.eg.user.model.entity.UserTypeEntity;
@@ -14,7 +13,7 @@ import com.eg.user.model.request.UserLoginRequest;
 import com.eg.user.model.request.UserRegistrationRequest;
 import com.eg.user.model.request.VehicleDetailsRequest;
 import com.eg.user.model.response.ProfileDetailsResponse;
-import com.eg.user.model.response.UserLoginResponse;
+import com.eg.user.model.response.UserTokenResponse;
 import com.eg.user.model.response.UserRegistrationResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -100,8 +99,8 @@ public class TestConstants {
       .build();
   }
 
-  public static UserLoginResponse buildUserLoginResponse() {
-    return UserLoginResponse.builder()
+  public static UserTokenResponse buildUserLoginResponse() {
+    return UserTokenResponse.builder()
       .accessToken("accessToken")
       .build();
   }

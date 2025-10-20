@@ -20,11 +20,11 @@ import java.time.LocalDateTime;
 
 @Builder
 @Entity
-@Table(name = "TOKEN")
+@Table(name = "REFRESH_TOKEN")
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class TokenEntity {
+public class RefreshTokenEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

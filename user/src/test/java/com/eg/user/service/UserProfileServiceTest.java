@@ -2,7 +2,6 @@ package com.eg.user.service;
 
 
 import com.eg.common.model.enums.CustomerStatusEnum;
-import com.eg.common.model.enums.UserTypeEnum;
 import com.eg.user.exception.BadRequestException;
 import com.eg.user.model.response.ProfileDetailsResponse;
 import com.eg.user.repository.UserRepository;
@@ -54,7 +53,7 @@ public class UserProfileServiceTest {
   void getDriverProfileDetailsSuccessfully() {
     when(userRepository.findById(any()))
       .thenReturn(Optional.of(buildUserEntity(1L, DRIVER, CustomerStatusEnum.ACTIVE)));
-    when(vehicleRepository.findByUserEntity(any()))
+    when(vehicleRepository.findByUser(any()))
       .thenReturn(Optional.ofNullable(buildVehicleEntity()));
 
     ProfileDetailsResponse profileDetailsResponse =
@@ -76,7 +75,7 @@ public class UserProfileServiceTest {
   void getDriverProfileDetailsVehicleDetailsNotFound() {
     when(userRepository.findById(any()))
       .thenReturn(Optional.of(buildUserEntity(1L, DRIVER, CustomerStatusEnum.ACTIVE)));
-    when(vehicleRepository.findByUserEntity(any()))
+    when(vehicleRepository.findByUser(any()))
       .thenReturn(Optional.empty());
 
     assertThrows(BadRequestException.class, () ->

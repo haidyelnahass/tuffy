@@ -38,6 +38,5 @@ public class UserRegistrationController {
     userRegistrationService.confirmProfile(request);
   }
 
-  // TODO Reset Password Capabilities
   // TODO OTP Notifications to verify mobile number
 }

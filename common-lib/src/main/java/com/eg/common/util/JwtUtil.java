@@ -1,5 +1,6 @@
 package com.eg.common.util;
 
+import com.eg.common.model.TokenDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -12,22 +13,44 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-  @Value("${security.jwt.secret}")
-  private String secretKey;
+  @Value("${security.jwt.access.secret}")
+  private String accessSecretKey;
 
-  public String generateToken(String userId, String name,
-                              String userType, String customerStatus) {
-    // 1 hour
-    long expirationMs = 3600000;
-    return Jwts.builder()
+  @Value("${security.jwt.refresh.secret}")
+  private String refreshSecretKey;
+
+  @Value("${security.jwt.access.expiration-ms}")
+  private long accessTokenExpirationMs;
+
+  @Value("${security.jwt.refresh.expiration-ms}")
+  private long refreshTokenExpirationMs;
+
+  public TokenDetails generateAccessToken(String userId, String name,
+                                          String userType, String customerStatus) {
+    String token = Jwts.builder()
       .setSubject(userId)
       .claim("name", name)
       .claim("role", userType)
       .claim("status", customerStatus)
       .setIssuedAt(new Date())
-      .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
-      .signWith(jwtSigningKey(secretKey))
+      .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpirationMs))
+      .signWith(jwtSigningKey(accessSecretKey))
       .compact();
+    return TokenDetails.builder()
+      .token(token)
+      .expiresIn(accessTokenExpirationMs)
+      .build();
+  }
+
+  public TokenDetails generateRefreshToken(String userId) {
+    return TokenDetails.builder().token(Jwts.builder()
+      .setSubject(userId)
+      .setIssuedAt(new Date())
+      .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpirationMs))
+      .signWith(jwtSigningKey(accessSecretKey))
+      .compact())
+      .expiresIn(refreshTokenExpirationMs)
+      .build();
   }
 
   public Key jwtSigningKey(String jwtSecret) {
@@ -35,21 +58,21 @@ public class JwtUtil {
     return Keys.hmacShaKeyFor(jwtSecret.getBytes());
   }
 
-  public boolean validateToken(String token) {
-    return !isTokenExpired(token);
+  public boolean validateToken(String token, boolean isAccess) {
+    return !isTokenExpired(token, isAccess);
   }
 
-  public Claims extractClaims(String token) {
+  public Claims extractClaims(String token, boolean isAccess) {
     return Jwts.parserBuilder()
-      .setSigningKey(jwtSigningKey(secretKey))
+      .setSigningKey(jwtSigningKey(isAccess ? accessSecretKey: refreshSecretKey))
       .build()
       .parseClaimsJws(token)
       .getBody();
   }
 
-  private boolean isTokenExpired(String token) {
+  private boolean isTokenExpired(String token, boolean isAccess) {
     Date expiration = Jwts.parserBuilder()
-      .setSigningKey(jwtSigningKey(secretKey))
+      .setSigningKey(jwtSigningKey(isAccess? accessSecretKey: refreshSecretKey))
       .build()
       .parseClaimsJws(token)
       .getBody()
